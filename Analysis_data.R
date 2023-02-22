@@ -2,6 +2,7 @@ library(dplyr)
 library(lattice)
 setwd("~/Desktop/Units/HPC/ex2/HPC_ex2")
 
+#OMP_NUM_THREADS set to number of processor you choose when you submit the the job
 df1=read.csv("2_double_mkl_EPYC.csv", header = FALSE)
 colnames(df1) <-c('type_data', 'time', 'dimension', 'GFlops')
 N<-10
