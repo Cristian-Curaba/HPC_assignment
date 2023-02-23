@@ -1,0 +1,36 @@
+#!/bin/bash
+#SBATCH --no-requeue
+#SBATCH --job-name="Curaba_test"
+#SBATCH --partition=THIN
+#or FHPC
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=2:00:00
+
+module load architecture/AMD
+module load mkl
+module load openBLAS/0.3.21-omp
+module load openMPI/4.1.4/gnu/12.2.1
+
+#Entry dir
+export entry_dir= $(pwd)
+#Code dir
+export code=/u/dssc/ccurab00/scratch/Foundations_of_HPC_2022/Assignment/exercise2
+
+cd $code
+make clean
+make cpu
+
+for i in {0..9}
+do
+  	let size=$((2000+2000*$i))
+        for j in {1..5}
+        do 
+           	echo $size
+                ./gemm_mkl.x $size $size $size >> 2_float_mkl_thin.csv
+                ./gemm_oblas.x $size $size $size >> 2_float_oblas_thin.csv
+#               ./gemm_blis.x $size $size $size >> 2_double_blis_64.csv
+        done
+done
+
+

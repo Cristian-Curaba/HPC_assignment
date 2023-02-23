@@ -1,0 +1,44 @@
+#!/bin/bash
+#SBATCH --no-requeue
+#SBATCH --job-name="Curaba_test"
+#SBATCH --partition=EPYC
+#or FHPC
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=2:00:00
+
+module load architecture/AMD
+module load mkl
+module load openBLAS/0.3.21-omp
+module load openMPI/4.1.4/gnu/12.2.1
+
+##Entry dir
+export entry_dir= $(pwd)
+##Code dir
+export code=/u/dssc/ccurab00/scratch/Foundations_of_HPC_2022/Assignment/exercise2
+##Policy places
+#export OMP_PLACES=sockets
+export OMP_PLACES=cores
+#export OMP_PLACES=threads
+##Policy bindings
+#export OMP_PROC_BIND=false
+#export OMP_PROC_BIND=close
+#export OMP_PROC_BIND=spread
+export OMP_PROC_BIND=master
+
+#export OMP_NUM_THREADS=16
+
+cd $code
+make clean
+make cpu
+
+for i in {0..4}
+do	let size=$((2000+2000*$i))
+        for j in {1..2}
+        do 
+		echo $size
+                ./gemm_mkl.x $size $size $size >> 2_double_mkl_EPYC_cores_master.csv
+                ./gemm_oblas.x $size $size $size >> 2_double_oblas_EPYC_cores_master.csv
+#               ./gemm_blis.x $size $size $size >> 2_double_blis_64.csv
+        done
+done
