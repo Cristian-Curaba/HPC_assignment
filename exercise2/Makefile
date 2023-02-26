@@ -18,6 +18,6 @@ gemm_oblas.x: gemm.c
 	gcc -DUSE_FLOAT -DOPENBLAS $^ -m64 -I${OPENBLASROOT}/include -L/${OPENBLASROOT}/lib -lopenblas -lpthread -o $@ -fopenmp
 
 gemm_blis.x: gemm.c
-	gcc -DUSE_FLOAT  -DBLIS $^ -m64 -I${BLISROOT}/include/blis -L/${BLISROOT}/lib -o $@ -lpthread  -lblis -fopenmp -lm
+#	gcc -DUSE_FLOAT  -DBLIS $^ -m64 -I${BLISROOT}/include/blis -L${BLISROOT}/lib -o $@ -lpthread  -lblis -fopenmp -lm
 clean:
 	rm -rf *.x

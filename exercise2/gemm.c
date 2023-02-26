@@ -27,13 +27,13 @@
 
 #ifdef USE_FLOAT
 #define MYFLOAT float
-#define DATATYPE printf("float ");
+#define DATATYPE printf("float, ");
 #define GEMMCPU cblas_sgemm
 #endif
 
 #ifdef USE_DOUBLE
 #define MYFLOAT double 
-#define DATATYPE printf("double ");
+#define DATATYPE printf("double, ");
 #define GEMMCPU cblas_dgemm
 #endif
 
@@ -117,8 +117,8 @@ int main(int argc, char** argv)
     elapsed = (double)diff(begin,end).tv_sec + (double)diff(begin,end).tv_nsec / 1000000000.0;
     double gflops = 2.0 * m *n*k;
     gflops = gflops/elapsed*1.0e-9; 
-    printf (" %d.%d ", diff(begin,end).tv_sec, diff(begin,end).tv_nsec );
-    printf("%d %lf\n",m, gflops);
+    printf ("%d.%d, ", diff(begin,end).tv_sec, diff(begin,end).tv_nsec );
+    printf("%d, %lf\n",m, gflops);
 #ifdef PRINT
     printf (" Top left corner of matrix A: \n");
     for (i=0; i<min(m,6); i++) {
