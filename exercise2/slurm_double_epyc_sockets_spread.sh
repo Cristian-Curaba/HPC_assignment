@@ -32,8 +32,8 @@ do	let size=$((2000+2000*$i))
         for j in {1..3}
         do 
            	echo $size
-                ./gemm_mkl.x $size $size $size >> 1_double_mkl_EPYC_sockets_spread.csv
-                ./gemm_oblas.x $size $size $size >> 1_double_oblas_EPYC_sockets_spread.csv
+                ./gemm_mkl.x $size $size $size >> 5_double_mkl_EPYC_sockets_spread.csv
+                ./gemm_oblas.x $size $size $size >> 5_double_oblas_EPYC_sockets_spread.csv
 #              	./gemm_blis.x $size $size $size >> 1_float_blis_64.csv
         done
 done

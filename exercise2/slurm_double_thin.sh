@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --no-requeue
 #SBATCH --job-name="Curaba_test"
-#SBATCH --partition=thin
+#SBATCH --partition=THIN
 #or FHPC
 #SBATCH --nodes=1
 #SBATCH --exclusive

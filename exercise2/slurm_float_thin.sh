@@ -27,7 +27,7 @@ gcc -fopenmp 00_where_I_am.c -o 00_where_I_am.x
 rm where_I_am.csv
 ./00_where_I_am.x >> where_I_am.csv
 
-for i in {0..20}
+for i in {0..10}
 do	let size=$((2000+2000*$i))
         for j in {1..3}
         do 
