@@ -136,15 +136,15 @@ for (i in 1:N){
 }
 
 df12=read.csv("5_double_mkl_EPYC_sockets_spread.csv", header = FALSE)
-colnames(df11) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-length(df11[,1])/3
-t11=c()
-f11=c()
+colnames(df12) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df12[,1])/3
+t12=c()
+f12=c()
 
 for (i in 1:N){ 
-  auxdf<-dplyr::filter(df11, dimension==2000*i)
-  t11[i]<-mean(auxdf$time)
-  f11[i]<-mean(auxdf$GFlops)
+  auxdf<-dplyr::filter(df12, dimension==2000*i)
+  t12[i]<-mean(auxdf$time)
+  f12[i]<-mean(auxdf$GFlops)
 }
 
 df9o=read.csv("5_double_oblas_EPYC_cores_spread.csv", header = FALSE)
@@ -183,15 +183,15 @@ for (i in 1:N){
 }
 
 df12o=read.csv("5_double_oblas_EPYC_sockets_spread.csv", header = FALSE)
-colnames(df11o) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-length(df11o[,1])/3
-t11o=c()
-f11o=c()
+colnames(df12o) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df12o[,1])/3
+t12o=c()
+f12o=c()
 
 for (i in 1:N){ 
-  auxdf<-dplyr::filter(df11o, dimension==2000*i)
-  t11o[i]<-mean(auxdf$time)
-  f11o[i]<-mean(auxdf$GFlops)
+  auxdf<-dplyr::filter(df12o, dimension==2000*i)
+  t12o[i]<-mean(auxdf$time)
+  f12o[i]<-mean(auxdf$GFlops)
 }
 
 x1= seq(from=2000, to= 42000, by=2000)
@@ -235,19 +235,32 @@ xyplot(t7+t8~x4,main="Float, Thin, Default policy" ,
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 xyplot(f7+f8~x4,main="Float, Thin, Default policy" ,
-        
+      
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-
+#Changing affinity threads doesn't provide better results
 ##DA QUI
-xyplot(t9+t10+t11~x1,main="Float, Epyc, Mkl" ,
-       fill = c("blue", "pink", "green"), 
+x5=seq(2000, 42000, 2000)
+xyplot(t9+t10+t11+t12~x5,main="Double, Epyc, Mkl" ,
+       fill = c("blue", "pink", "green", "orange"), 
        xlab="Dimension square matrixes", ylab="Time (s)",
-       auto.key=list(x=0.05, y=0.95, text=c("cores-false","cores-master", "sockets-false"),
+       auto.key=list(x=0.05, y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
-xyplot(f9+f10+f11~x1, main="Float, Epyc, Mkl" ,
-       fill = c("blue", "pink", "green"),
+xyplot(f9+f10+f11+f12~x5, main="Double, Epyc, Mkl" ,
+       fill = c("blue", "pink", "green", "orange"),
        xlab="Dimension square matrixes", ylab="GFlops/s",
-       auto.key=list(x=0.05,y=0.95, text=c("cores-false","cores-master", "sockets-false"),
+       auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
+                     points=TRUE, col=c(1,2)))
+
+x5o=seq(2000, 42000, 2000)
+xyplot(t9o+t10o+t11o+t12o~x5o,main="Double, Epyc, Oblas" ,
+       fill = c("blue", "pink", "green", "orange"), 
+       xlab="Dimension square matrixes", ylab="Time (s)",
+       auto.key=list(x=0.05, y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
+                     points=TRUE, col=c(1,2)))
+xyplot(f9o+f10o+f11o+f12o~x5o, main="Double, Epyc, Oblas" ,
+       fill = c("blue", "pink", "green", "orange"),
+       xlab="Dimension square matrixes", ylab="GFlops/s",
+       auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
