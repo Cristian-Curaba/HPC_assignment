@@ -1,23 +1,23 @@
 library(dplyr)
 library(lattice)
-setwd("~/Desktop/Units/HPC/ex2/HPC_ex2")
+setwd("~/Desktop/Units/HPC/My_assignment/Assignment_HPC/exercise2")
 
 #OMP_NUM_THREADS set to number of processor you choose when you submit the the job
-df1=read.csv("2_double_mkl_EPYC.csv", header = FALSE)
+df1=read.csv("1_double_mkl_EPYC.csv", header = FALSE)
 colnames(df1) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df1[,1])/3
 t1=c()
 f1=c()
-x= seq(from=2000, to= 20000, by=2000)
+
 for (i in 1:N){ 
   auxdf<-dplyr::filter(df1, dimension==2000*i)
   t1[i]<-mean(auxdf$time)
   f1[i]<-mean(auxdf$GFlops)
 }
 
-df2=read.csv("2_double_oblas_EPYC.csv", header = FALSE)
+df2=read.csv("1_double_oblas_EPYC.csv", header = FALSE)
 colnames(df2) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df2[,1])/3
 t2=c()
 f2=c()
 
@@ -27,9 +27,9 @@ for (i in 1:N){
   f2[i]<-mean(auxdf$GFlops)
 }
 
-df3=read.csv("2_float_mkl_EPYC.csv", header = FALSE)
+df3=read.csv("1_float_mkl_EPYC.csv", header = FALSE)
 colnames(df3) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df3[,1])/3
 t3=c()
 f3=c()
 
@@ -39,9 +39,9 @@ for (i in 1:N){
   f3[i]<-mean(auxdf$GFlops)
 }
 
-df4=read.csv("2_float_oblas_EPYC.csv", header = FALSE)
+df4=read.csv("1_float_oblas_EPYC.csv", header = FALSE)
 colnames(df4) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df4[,1])/3
 t4=c()
 f4=c()
 
@@ -51,9 +51,9 @@ for (i in 1:N){
   f4[i]<-mean(auxdf$GFlops)
 }
 
-df5=read.csv("2_double_mkl_thin.csv", header = FALSE)
+df5=read.csv("1_double_mkl_thin.csv", header = FALSE)
 colnames(df5) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df5[,1])/3
 t5=c()
 f5=c()
 
@@ -63,9 +63,9 @@ for (i in 1:N){
   f5[i]<-mean(auxdf$GFlops)
 }
 
-df6=read.csv("2_double_oblas_thin.csv", header = FALSE)
+df6=read.csv("1_double_oblas_thin.csv", header = FALSE)
 colnames(df6) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df6[,1])/3
 t6=c()
 f6=c()
 
@@ -75,9 +75,9 @@ for (i in 1:N){
   f6[i]<-mean(auxdf$GFlops)
 }
 
-df7=read.csv("2_float_mkl_thin.csv", header = FALSE)
+df7=read.csv("1_float_mkl_thin.csv", header = FALSE)
 colnames(df7) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df7[,1])/3
 t7=c()
 f7=c()
 
@@ -87,9 +87,9 @@ for (i in 1:N){
   f7[i]<-mean(auxdf$GFlops)
 }
 
-df8=read.csv("2_float_oblas_thin.csv", header = FALSE)
+df8=read.csv("1_float_oblas_thin.csv", header = FALSE)
 colnames(df8) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-10
+N<-length(df8[,1])/3
 t8=c()
 f8=c()
 
@@ -99,22 +99,21 @@ for (i in 1:N){
   f8[i]<-mean(auxdf$GFlops)
 }
 
-x1=seq(2000, 10000, 2000)
-df9=read.csv("2_double_mkl_EPYC_cores_false.csv", header = FALSE)
+
+df9=read.csv("5_double_mkl_EPYC_cores_spread.csv", header = FALSE)
 colnames(df9) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-5
+N<-length(df9[,1])/3
 t9=c()
 f9=c()
-
 for (i in 1:N){ 
   auxdf<-dplyr::filter(df9, dimension==2000*i)
   t9[i]<-mean(auxdf$time)
   f9[i]<-mean(auxdf$GFlops)
 }
 
-df10=read.csv("2_double_mkl_EPYC_cores_master.csv", header = FALSE)
+df10=read.csv("5_double_mkl_EPYC_cores_true.csv", header = FALSE)
 colnames(df10) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-5
+N<-length(df10[,1])/3
 t10=c()
 f10=c()
 
@@ -124,9 +123,9 @@ for (i in 1:N){
   f10[i]<-mean(auxdf$GFlops)
 }
 
-df11=read.csv("2_double_mkl_EPYC_sockets_false.csv", header = FALSE)
+df11=read.csv("5_double_mkl_EPYC_sockets_master.csv", header = FALSE)
 colnames(df11) <-c('type_data', 'time', 'dimension', 'GFlops')
-N<-5
+N<-length(df11[,1])/3
 t11=c()
 f11=c()
 
@@ -135,46 +134,113 @@ for (i in 1:N){
   t11[i]<-mean(auxdf$time)
   f11[i]<-mean(auxdf$GFlops)
 }
-xyplot(t1+t2~x,main="Double, Epyc, Default policy" ,
+
+df12=read.csv("5_double_mkl_EPYC_sockets_spread.csv", header = FALSE)
+colnames(df11) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df11[,1])/3
+t11=c()
+f11=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df11, dimension==2000*i)
+  t11[i]<-mean(auxdf$time)
+  f11[i]<-mean(auxdf$GFlops)
+}
+
+df9o=read.csv("5_double_oblas_EPYC_cores_spread.csv", header = FALSE)
+colnames(df9o) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df9o[,1])/3
+t9o=c()
+f9o=c()
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df9o, dimension==2000*i)
+  t9o[i]<-mean(auxdf$time)
+  f9o[i]<-mean(auxdf$GFlops)
+}
+
+df10o=read.csv("5_double_oblas_EPYC_cores_true.csv", header = FALSE)
+colnames(df10o) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df10o[,1])/3
+t10o=c()
+f10o=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df10o, dimension==2000*i)
+  t10o[i]<-mean(auxdf$time)
+  f10o[i]<-mean(auxdf$GFlops)
+}
+
+df11o=read.csv("5_double_oblas_EPYC_sockets_master.csv", header = FALSE)
+colnames(df11o) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df11o[,1])/3
+t11o=c()
+f11o=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df11o, dimension==2000*i)
+  t11o[i]<-mean(auxdf$time)
+  f11o[i]<-mean(auxdf$GFlops)
+}
+
+df12o=read.csv("5_double_oblas_EPYC_sockets_spread.csv", header = FALSE)
+colnames(df11o) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df11o[,1])/3
+t11o=c()
+f11o=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df11o, dimension==2000*i)
+  t11o[i]<-mean(auxdf$time)
+  f11o[i]<-mean(auxdf$GFlops)
+}
+
+x1= seq(from=2000, to= 42000, by=2000)
+
+xyplot(t1+t2~x1,main="Double, Epyc, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(f1+f2~x,main="Double, Epyc, Default policy" ,
+xyplot(f1+f2~x1,main="Double, Epyc, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(t3+t4~x,main="Float, Epyc, Default policy" ,
+x2=seq(2000, 32000, 2000)
+xyplot(t3+t4~x2,main="Float, Epyc, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(f3+f4~x,main="Float, Epyc, Default policy" ,
+xyplot(f3+f4~x2,main="Float, Epyc, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(t5+t6~x,main="Double, Thin, Default policy" ,
+x3=seq(2000, 36000, 2000)
+xyplot(t5+t6~x3,main="Double, Thin, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(f5+f6~x,main="Double, Thin, Default policy" ,
+xyplot(f5+f6~x3,main="Double, Thin, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(t7+t8~x,main="Float, Thin, Default policy" ,
+x4=seq(2000, 22000, 2000)
+xyplot(t7+t8~x4,main="Float, Thin, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
-xyplot(f7+f8~x,main="Float, Thin, Default policy" ,
+xyplot(f7+f8~x4,main="Float, Thin, Default policy" ,
         
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
+
+##DA QUI
 xyplot(t9+t10+t11~x1,main="Float, Epyc, Mkl" ,
        fill = c("blue", "pink", "green"), 
        xlab="Dimension square matrixes", ylab="Time (s)",
