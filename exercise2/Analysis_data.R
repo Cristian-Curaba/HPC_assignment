@@ -264,3 +264,4 @@ xyplot(f9o+f10o+f11o+f12o~x5o, main="Double, Epyc, Oblas" ,
        xlab="Dimension square matrixes", ylab="GFlops/s",
        auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
+
