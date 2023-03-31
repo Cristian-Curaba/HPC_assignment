@@ -8,8 +8,7 @@ OPENBLASROOT=${OPENBLAS_ROOT}
 ### BLIS library
 BLISROOT:=/u/dssc/ccurab00/scratch/blis
 
-cpu: gemm_mkl.x gemm_oblas.x gemm_blis.x
-
+cpu: gemm_mkl.x gemm_oblas.x
 
 gemm_mkl.x: gemm.c
 	gcc -DUSE_DOUBLE -DMKL $^ -m64 -I${MKLROOT}/include $(MKL)  -o $@
