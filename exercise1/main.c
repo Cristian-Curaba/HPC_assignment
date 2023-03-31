@@ -18,13 +18,14 @@
 char fname_deflt[] = "game_of_life.pgm";
 
 int   action = 0;
+					//i/r for inizialiazing/running
 int   x      = K_DFLT;			//rectangular grid
 int   y      = K_DFLT;
-int   e      = ORDERED;
-int   n      = 5;
-int   s      = 1;
-float p      = 0.05;
-char *fname  = NULL;
+float p      = 0.05;			//Probability of a cell to be alive in inizialiazing
+int   e      = ORDERED;			//Ordered=1, Static=0
+int   n      = 5;			//Numbers of iterations
+int   s      = 1;			//Screen every s iterations
+char *fname  = NULL;			//Name of the file
 
 
 int main ( int argc, char **argv ){
