@@ -2,9 +2,6 @@
 title: "Repository for the HPC assignment 2022/2023"
 authors: Filippo Olivetti and Cristian Curaba
 date: "april 2023"
-output:
-  html_document:
-    df_print: paged
 ---
 
 The project is carried out by **Filippo Olivetti** and **Cristian Curaba**. This repository contains our solutions for the 2022-2023 assignment from the "High Performance Computing" course in Data Science and Scientific Computing master degree at Units.
