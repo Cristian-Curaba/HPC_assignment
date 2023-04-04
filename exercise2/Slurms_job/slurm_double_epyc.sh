@@ -13,11 +13,6 @@ module load openBLAS/0.3.21-omp
 
 export code=/u/dssc/ccurab00/scratch/Foundations_of_HPC_2022/Assignment/exercise2
 export OMP_NUM_THREADS=64
-# export LD_LIBRARY_PATH=/u/dssc/ccurab00/scratch/blis/lib:$LD_LIBRARY_PATH
-# export BLIS_NUM_THREADS=64
-# export OMP_PLACES=
-# export OMP_PROC_BIND=
-
 
 cd $code
 make clean
@@ -34,6 +29,5 @@ do	let size=$((2000+2000*$i))
            	echo $size
                 ./gemm_mkl.x $size $size $size >> 1_double_mkl_EPYC.csv
                 ./gemm_oblas.x $size $size $size >> 1_double_oblas_EPYC.csv
-#              	./gemm_blis.x $size $size $size >> 1_float_blis_64.csv
         done
 done

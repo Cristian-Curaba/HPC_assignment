@@ -1,6 +1,6 @@
 library(dplyr)
 library(lattice)
-setwd("~/Desktop/Units/HPC/My_assignment/Assignment_HPC/exercise2")
+setwd("~/Desktop/Units/HPC/My_assignment/Assignment_HPC/exercise2/csv_files")
 
 #OMP_NUM_THREADS set to number of processor you choose when you submit the the job
 df1=read.csv("1_double_mkl_EPYC.csv", header = FALSE)
@@ -194,6 +194,31 @@ for (i in 1:N){
   f12o[i]<-mean(auxdf$GFlops)
 }
 
+df13=read.csv("1_float_mkl_thin_new_all.csv", header = FALSE)
+colnames(df13) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df13[,1])/3
+t13=c()
+f13=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df13, dimension==2000*i)
+  t13[i]<-mean(auxdf$time)
+  f13[i]<-mean(auxdf$GFlops)
+}
+
+df14=read.csv("1_float_oblas_thin_new_all.csv", header = FALSE)
+colnames(df14) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df14[,1])/3
+t14=c()
+f14=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df14, dimension==2000*i)
+  t14[i]<-mean(auxdf$time)
+  f14[i]<-mean(auxdf$GFlops)
+}
+
+
 x1= seq(from=2000, to= 42000, by=2000)
 
 xyplot(t1+t2~x1,main="Double, Epyc, Default policy" ,
@@ -240,7 +265,8 @@ xyplot(f7+f8~x4,main="Float, Thin, Default policy" ,
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 #Changing affinity threads doesn't provide better results
-##DA QUI
+
+
 x5=seq(2000, 42000, 2000)
 xyplot(t9+t10+t11+t12~x5,main="Double, Epyc, Mkl" ,
        fill = c("blue", "pink", "green", "orange"), 
@@ -264,4 +290,17 @@ xyplot(f9o+f10o+f11o+f12o~x5o, main="Double, Epyc, Oblas" ,
        xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
+x7<-seq(2000,20000,2000)
+xyplot(f13+f14~x7,main="Float, Thin, all 24 nodes" ,
+       
+       xlab="Dimension square matrices", ylab="Gflops",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
+xyplot(t13+t14~x7,main="Float, Thin, all 24 nodes" ,
+       
+       xlab="Dimension square matrices", ylab="Time (s)",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
 
