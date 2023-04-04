@@ -4,6 +4,7 @@
 #SBATCH --partition=THIN
 #or FHPC
 #SBATCH --nodes=1
+#SBATCH --cpus-per-task=12
 #SBATCH --exclusive
 #SBATCH --time=2:00:00
 
@@ -13,10 +14,7 @@ module load openBLAS/0.3.21-omp
 
 export code=/u/dssc/ccurab00/scratch/Foundations_of_HPC_2022/Assignment/exercise2
 export OMP_NUM_THREADS=12
-# export LD_LIBRARY_PATH=/u/dssc/ccurab00/scratch/blis/lib:$LD_LIBRARY_PATH
-# export BLIS_NUM_THREADS=64
-# export OMP_PLACES=
-# export OMP_PROC_BIND=
+
 
 
 cd $code

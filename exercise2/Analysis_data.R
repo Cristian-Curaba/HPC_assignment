@@ -198,45 +198,45 @@ x1= seq(from=2000, to= 42000, by=2000)
 
 xyplot(t1+t2~x1,main="Double, Epyc, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 xyplot(f1+f2~x1,main="Double, Epyc, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 x2=seq(2000, 32000, 2000)
 xyplot(t3+t4~x2,main="Float, Epyc, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 xyplot(f3+f4~x2,main="Float, Epyc, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 x3=seq(2000, 36000, 2000)
 xyplot(t5+t6~x3,main="Double, Thin, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 xyplot(f5+f6~x3,main="Double, Thin, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 x4=seq(2000, 22000, 2000)
 xyplot(t7+t8~x4,main="Float, Thin, Default policy" ,
         
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 xyplot(f7+f8~x4,main="Float, Thin, Default policy" ,
       
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 #Changing affinity threads doesn't provide better results
@@ -244,24 +244,24 @@ xyplot(f7+f8~x4,main="Float, Thin, Default policy" ,
 x5=seq(2000, 42000, 2000)
 xyplot(t9+t10+t11+t12~x5,main="Double, Epyc, Mkl" ,
        fill = c("blue", "pink", "green", "orange"), 
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
 xyplot(f9+f10+f11+f12~x5, main="Double, Epyc, Mkl" ,
        fill = c("blue", "pink", "green", "orange"),
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
 
 x5o=seq(2000, 42000, 2000)
 xyplot(t9o+t10o+t11o+t12o~x5o,main="Double, Epyc, Oblas" ,
        fill = c("blue", "pink", "green", "orange"), 
-       xlab="Dimension square matrixes", ylab="Time (s)",
+       xlab="Dimension square matrices", ylab="Time (s)",
        auto.key=list(x=0.05, y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
 xyplot(f9o+f10o+f11o+f12o~x5o, main="Double, Epyc, Oblas" ,
        fill = c("blue", "pink", "green", "orange"),
-       xlab="Dimension square matrixes", ylab="GFlops/s",
+       xlab="Dimension square matrices", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("cores-spread","cores-true", "sockets-master", "sockets-spread"),
                      points=TRUE, col=c(1,2)))
 
