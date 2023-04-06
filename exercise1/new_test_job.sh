@@ -24,9 +24,9 @@ cd test_images
 echo -e "\n"
 
 for j in {1..2}
-do	
-	echo -e "$j, 10000x10000, , , , , ,socket, , , , , , cores close" >> ../statistics/STATISTICS.csv	
-	mpirun -np 2 --map-by socket ../a.out -r -x 10000 -y 10000 -e 1 -n 10 -s 10 -f big_exp_10000x10000.pgm >> ../statistics/STATISTICS.csv
+do
+        echo -e "$j, 1000x1000, , , , , ,socket, , , , , , cores close" >> ../statistics/STATISTICS.csv
+        mpirun -np 4 --map-by socket ../a.out -r -x 1000 -y 1000 -e 1 -n 500 -s 250 -f exp_1000x1000.pgm >> ../statistics/STATISTICS.csv
 
 done
 
