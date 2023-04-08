@@ -218,6 +218,36 @@ for (i in 1:N){
   f14[i]<-mean(auxdf$GFlops)
 }
 
+df15=read.csv("7_float_mkl_EPYC_cpus.csv", header = FALSE)
+colnames(df15) <-c('type_data', 'time', 'dimension', 'GFlops')
+L<-length(df15[,1])
+x15=seq(1,65,8)
+t15=c()
+f15=c()
+k=1
+for (i in seq(1,L-1,2)){ 
+  auxdf=df15[c(i,i+1),]
+  t15[k]<-mean(auxdf$time)
+  f15[k]<-mean(auxdf$GFlops)
+  k=k+1
+}
+
+
+df16=read.csv("7_float_oblas_EPYC_cpus.csv", header = FALSE)
+colnames(df16) <-c('type_data', 'time', 'dimension', 'GFlops')
+L<-length(df16[,1])
+x15=seq(1,65,8)
+t16=c()
+f16=c()
+k=1
+for (i in seq(1,L-1,2)){ 
+  auxdf=df16[c(i,i+1),]
+  t16[k]<-mean(auxdf$time)
+  f16[k]<-mean(auxdf$GFlops)
+  k=k+1
+}
+
+
 
 x1= seq(from=2000, to= 42000, by=2000)
 
@@ -300,6 +330,19 @@ xyplot(f13+f14~x7,main="Float, Thin, all 24 nodes" ,
 xyplot(t13+t14~x7,main="Float, Thin, all 24 nodes" ,
        
        xlab="Dimension square matrices", ylab="Time (s)",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
+
+xyplot(t15+t16~x15,main="Float, EPYC, dimension=10000",
+       
+       xlab="Number of cpus", ylab="Time (s)",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
+xyplot(f15+f16~x15,main="Float, EPYC, dimension=10000",
+       
+       xlab="Number of cpus", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 
