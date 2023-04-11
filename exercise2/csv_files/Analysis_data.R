@@ -15,6 +15,8 @@ for (i in 1:N){
   f1[i]<-mean(auxdf$GFlops)
 }
 
+
+
 df2=read.csv("1_double_oblas_EPYC.csv", header = FALSE)
 colnames(df2) <-c('type_data', 'time', 'dimension', 'GFlops')
 N<-length(df2[,1])/3
@@ -39,6 +41,20 @@ for (i in 1:N){
   f3[i]<-mean(auxdf$GFlops)
 }
 
+df3s=read.csv("8_float_mkl_EPYC_serial.csv", header = FALSE)
+colnames(df3s) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df3s[,1])/3
+t3s=c()
+f3s=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df3s, dimension==2000*i)
+  t3s[i]<-mean(auxdf$time)
+  f3s[i]<-mean(auxdf$GFlops)
+}
+
+sp3=t3s/t3[1:length(t3s)]
+
 df4=read.csv("1_float_oblas_EPYC.csv", header = FALSE)
 colnames(df4) <-c('type_data', 'time', 'dimension', 'GFlops')
 N<-length(df4[,1])/3
@@ -50,6 +66,20 @@ for (i in 1:N){
   t4[i]<-mean(auxdf$time)
   f4[i]<-mean(auxdf$GFlops)
 }
+
+df4s=read.csv("8_float_oblas_EPYC_serial.csv", header = FALSE)
+colnames(df4s) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df4s[,1])/3
+t4s=c()
+f4s=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df4s, dimension==2000*i)
+  t4s[i]<-mean(auxdf$time)
+  f4s[i]<-mean(auxdf$GFlops)
+}
+
+sp4=t4s/t4[1:length(t4s)]
 
 df5=read.csv("1_double_mkl_thin.csv", header = FALSE)
 colnames(df5) <-c('type_data', 'time', 'dimension', 'GFlops')
@@ -247,8 +277,12 @@ for (i in seq(1,L-1,2)){
   k=k+1
 }
 
+##Scalability##
+x3s=seq(from=2000, to=16000, by=2000)
+#sp3 is mkl, sp4 is oblas
+plot(x3s, cbind(sp3,sp4), xlab="matrices dimension", ylab="speed up", main="")
 
-
+##########
 x1= seq(from=2000, to= 42000, by=2000)
 
 xyplot(t1+t2~x1,main="Double, Epyc, Default policy" ,
