@@ -170,7 +170,7 @@ void run_game(int isize, int jsize, const char *image_name, int total_steps , in
 	     tstart = omp_get_wtime();
 	     for(time_steps = 0; time_steps < total_steps; time_steps++){
 	     	    
-	    	    #pragma omp parallel for shared(isize,jsize,pixels) collapse(2)
+	    	    // pragma omp parallel for shared(isize,jsize,pixels) collapse(2), not usable because it's intrisecally serial
 		     for ( int i = 0; i < isize; i++ ){
 			for ( int j = 0; j < jsize; j++ ){
 			    pixels[i][j] = upgrade_cell(isize,jsize,pixels,i,j);
@@ -195,15 +195,7 @@ void run_game(int isize, int jsize, const char *image_name, int total_steps , in
 
 	     tend = omp_get_wtime();
 	     
-	     
-
-	#pragma omp parallel
-        #pragma omp single
-        {
-        int nthreads = omp_get_num_threads();
-	// N_test, Img_dims, n, s, O or S, nOMP, nMPI, MPI_loc, MPI_rank, Time(sec), MPI_Scv(sec), MPI_Gav(sec), for_loop(sec),
-        printf(" , ,%d, %d , O, %d, 1, , , %g, , , , \n", total_steps, step_for_snap, nthreads,tend-tstart);
-        }
+	    
 	
 	// ---------------------------------------------------------------------------------------------------------------------
 	// --------------------------------- SECOND CASE ------------------------------------------------------------------------
