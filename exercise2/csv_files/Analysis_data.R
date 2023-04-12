@@ -15,6 +15,8 @@ for (i in 1:N){
   f1[i]<-mean(auxdf$GFlops)
 }
 
+
+
 df2=read.csv("1_double_oblas_EPYC.csv", header = FALSE)
 colnames(df2) <-c('type_data', 'time', 'dimension', 'GFlops')
 N<-length(df2[,1])/3
@@ -39,6 +41,20 @@ for (i in 1:N){
   f3[i]<-mean(auxdf$GFlops)
 }
 
+df3s=read.csv("8_float_mkl_EPYC_serial.csv", header = FALSE)
+colnames(df3s) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df3s[,1])/3
+t3s=c()
+f3s=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df3s, dimension==2000*i)
+  t3s[i]<-mean(auxdf$time)
+  f3s[i]<-mean(auxdf$GFlops)
+}
+
+sp3=t3s/t3[1:length(t3s)]
+
 df4=read.csv("1_float_oblas_EPYC.csv", header = FALSE)
 colnames(df4) <-c('type_data', 'time', 'dimension', 'GFlops')
 N<-length(df4[,1])/3
@@ -50,6 +66,20 @@ for (i in 1:N){
   t4[i]<-mean(auxdf$time)
   f4[i]<-mean(auxdf$GFlops)
 }
+
+df4s=read.csv("8_float_oblas_EPYC_serial.csv", header = FALSE)
+colnames(df4s) <-c('type_data', 'time', 'dimension', 'GFlops')
+N<-length(df4s[,1])/3
+t4s=c()
+f4s=c()
+
+for (i in 1:N){ 
+  auxdf<-dplyr::filter(df4s, dimension==2000*i)
+  t4s[i]<-mean(auxdf$time)
+  f4s[i]<-mean(auxdf$GFlops)
+}
+
+sp4=t4s/t4[1:length(t4s)]
 
 df5=read.csv("1_double_mkl_thin.csv", header = FALSE)
 colnames(df5) <-c('type_data', 'time', 'dimension', 'GFlops')
@@ -218,7 +248,41 @@ for (i in 1:N){
   f14[i]<-mean(auxdf$GFlops)
 }
 
+df15=read.csv("7_float_mkl_EPYC_cpus.csv", header = FALSE)
+colnames(df15) <-c('type_data', 'time', 'dimension', 'GFlops')
+L<-length(df15[,1])
+x15=seq(1,65,8)
+t15=c()
+f15=c()
+k=1
+for (i in seq(1,L-1,2)){ 
+  auxdf=df15[c(i,i+1),]
+  t15[k]<-mean(auxdf$time)
+  f15[k]<-mean(auxdf$GFlops)
+  k=k+1
+}
 
+
+df16=read.csv("7_float_oblas_EPYC_cpus.csv", header = FALSE)
+colnames(df16) <-c('type_data', 'time', 'dimension', 'GFlops')
+L<-length(df16[,1])
+x15=seq(1,65,8)
+t16=c()
+f16=c()
+k=1
+for (i in seq(1,L-1,2)){ 
+  auxdf=df16[c(i,i+1),]
+  t16[k]<-mean(auxdf$time)
+  f16[k]<-mean(auxdf$GFlops)
+  k=k+1
+}
+
+##Scalability##
+x3s=seq(from=2000, to=16000, by=2000)
+#sp3 is mkl, sp4 is oblas
+plot(x3s, cbind(sp3,sp4), xlab="matrices dimension", ylab="speed up", main="")
+
+##########
 x1= seq(from=2000, to= 42000, by=2000)
 
 xyplot(t1+t2~x1,main="Double, Epyc, Default policy" ,
@@ -300,6 +364,19 @@ xyplot(f13+f14~x7,main="Float, Thin, all 24 nodes" ,
 xyplot(t13+t14~x7,main="Float, Thin, all 24 nodes" ,
        
        xlab="Dimension square matrices", ylab="Time (s)",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
+
+xyplot(t15+t16~x15,main="Float, EPYC, dimension=10000",
+       
+       xlab="Number of cpus", ylab="Time (s)",
+       auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
+                     points=TRUE, col=c(1,2)))
+
+xyplot(f15+f16~x15,main="Float, EPYC, dimension=10000",
+       
+       xlab="Number of cpus", ylab="Gflops",
        auto.key=list(x=0.05,y=0.95, text=c("mkl","oblas"),
                      points=TRUE, col=c(1,2)))
 
